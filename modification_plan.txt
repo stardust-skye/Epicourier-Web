@@ -1,0 +1,808 @@
+# Project 3 Plan: Safer, Traceable Pantry Recommendations
+
+## Project direction
+
+Extend Epicourier's existing inventory recipe recommendations so they are safer to act on and easier to verify. Keep the existing Next.js, FastAPI, Supabase, and Gemini architecture. The user-facing feature remains familiar: recommend recipes from a household pantry, prioritize food nearing its date, and let the user inspect why each recipe was suggested. Project 3 adds enforceable food-safety rules, batch-level inventory, grounded explanations, and a small evaluation of whether those changes improve users' decisions.
+
+This is a focused extension of the inherited Project 2 code. The repository already has a deterministic receipt scorer, receipt-based ranking UI, correction flow, a shopping-gap flow, and an offline M0 evaluation. The inventory recommender is a distinct older path: `backend/api/inventory_recommender.py` asks Gemini for recipe IDs, scores, ingredient lists, and prose. The main opportunity is to put verifiable application rules around that path while preserving the existing receipt-v1 behavior.
+
+## Repository assessment
+
+### What is solid and worth preserving
+
+- `backend/api/receipt_scorer.py` is a deterministic scorer with explicit expiry handling and a substantial set of boundary and permutation tests under `backend/tests/p2/scoring/`.
+- Project 2's offline evaluation (`python3 p2/eval/run_eval.py`) checks hand-computed receipts, ordering, and rejection of a deliberately corrupted case. Keep it running and report its result with the final submission.
+- The inventory recommender already has a clear FastAPI boundary, a prompt builder, request/response Pydantic models, a recipe catalogue input, and tests in `backend/tests/test_inventory_recommender.py`.
+- Supabase inventory is user-scoped with RLS. The current `user_inventory` table has one row per `(user, ingredient, location)`, including one expiry date, so it cannot represent two purchases of the same ingredient with distinct dates.
+- The web app already has inventory CRUD, expiry displays, recipe recommendation UI, and shopping-to-inventory transfer paths. These give a practical route to demonstrate the extension without replacing the product.
+
+### Risks to validate in week one
+
+- The recommender's `NEVER` expiry rule exists in prompt text. Prompt instructions alone do not guarantee the model will obey it.
+- Model-generated ingredient lists and explanations are returned as supplied; the current response boundary does not establish that every asserted ingredient corresponds to the selected recipe or the application's ingredient catalogue.
+- Inventory is aggregated by location, which loses purchase/batch identity and makes first-expiring-first-used decisions unreliable.
+- The legacy recommender depends on Gemini and recipe data. Keep safety and verification logic testable without a live model, and identify the local data-loading path before committing to any model-call baseline.
+- Preserve the existing M0 command and its historical result separately from the new Project 3 claim. Do not imply a new measured result before running it.
+
+## Four major milestones
+
+### M1 — Enforced expiry safety in recommendation scoring
+
+Move the safety decision out of the prompt and into deterministic application code. Normalize the request's `as_of_date` and inventory expiry values, identify expired stock, and calculate usable inventory using a documented date boundary. Use recipe requirements and usable inventory to compute or validate the recommendation's food-safety eligibility. A recipe that can only be made using expired stock must be excluded; expired stock must contribute zero usable quantity. The model may propose candidates, but it cannot override that rule. Keep the rule in a small pure function so it can be tested independently of Gemini.
+
+**Evidence:** unit and property/boundary tests, including expired-only, mixed expired/fresh quantities, expiry today, missing expiry, invalid dates, and shuffled input order. Include a regression test that fails if an expired-only recipe is returned. Show the model prompt no longer bears responsibility for this invariant.
+
+**Definition of done:** every recommendation emitted by the endpoint passes the deterministic expiry gate; when too few eligible candidates remain, the API returns fewer results with a clear reason rather than filling the list with unsafe candidates.
+
+### M2 — Purchase-level inventory lots and safe migration
+
+Add an `inventory_lots` table keyed by lot ID, user, and ingredient, with quantity, unit, location, purchase/created timestamp, optional expiration date, and notes as appropriate. Add indexes, constraints, timestamps, and RLS policies consistent with the current inventory table. Create a forward-only migration that preserves existing inventory: convert each existing aggregate row into one legacy lot, retaining its quantity, unit, location, expiry, and ownership. Define how legacy `min_quantity` and edits/deletes map onto lots before changing API behavior.
+
+Update inventory read/write adapters and the relevant UI/API types to show lots for an ingredient/location and make the expiring-soon view lot-aware. Where quantity is consumed or reserved, choose a documented rule (earliest-expiring-first, with undated lots last) and test it. Avoid silently treating multiple lots as one expiry date. Keep compatibility at the API boundary during rollout so the existing inventory and recipe flows continue working.
+
+**Evidence:** SQL migration checks/fixtures for backfill fidelity, RLS ownership tests or policy checks, API tests for create/update/delete/list, and cases for several lots with different dates. Demonstrate that a migration preserves a pre-existing aggregate row.
+
+**Definition of done:** a user can distinguish two purchases of the same ingredient with different expiry dates, and the recommendation safety gate can consume lot-level quantities correctly.
+
+### M3 — Catalogue-grounded recommendation and explanation verification
+
+Treat Gemini output as an untrusted proposal. Validate each returned recipe ID against the recipe records actually supplied to the request; derive canonical recipe ingredients from that source rather than trusting model-provided names. For every ingredient asserted as available, missing, expiring, or used in the explanation, resolve it against the canonical recipe ingredient set and the 448-row ingredient catalogue. Reject, repair from canonical data, or mark unverifiable assertions according to an explicit policy. Do not turn a string similarity guess into a verified ingredient identity.
+
+Return a compact structured evidence section per recommendation: canonical ingredient ID/name, availability status, usable quantity/unit where known, and lot expiry evidence when relevant. Keep natural-language `reason` as presentation only; the structured evidence becomes the source for the UI's ingredient lists and safety badges. Catalogue version/count should be explicit in the validation test or fixture so catalogue drift is visible.
+
+**Evidence:** tests for unknown IDs, wrong recipe names, hallucinated ingredient assertions, duplicate/alias names, absent catalogue entries, and valid outputs. Add a fixture-based verification sweep over every asserted ingredient in the test corpus against the complete 448-row catalogue. A deliberately corrupted explanation must be caught.
+
+**Definition of done:** no ingredient shown as a verified recipe or pantry fact can bypass the canonical recipe and catalogue checks; invalid model output degrades clearly and safely.
+
+### M4 — Does the safer, grounded explanation change decisions? (hypothesis)
+
+Run a small within-subject study using the same recommendation scenarios in two conditions: current inherited inventory recommendations and the Project 3 safety/evidence presentation. Counterbalance the order. Ask participants to choose a recipe and identify which pantry evidence they relied on. Measure unsafe expired-only selections, ingredient-claim accuracy, decision time, and stated confidence. Use a short, prewritten protocol and a small convenience sample appropriate to the course; report counts and limitations rather than claiming broad user impact.
+
+**Hypothesis, not a requirement:** showing verified per-ingredient evidence and excluding expired-only recipes will reduce unsafe selections and improve users' accuracy about what they have, compared with the inherited recommendation presentation. The study may fail to support the hypothesis; that is a valid result.
+
+**Evidence:** anonymized scenario set, protocol, condition order, raw tally sheet without unnecessary personal data, and a script/notebook that calculates the reported metrics. Do not make the study a prerequisite for shipping M1–M3; complete a pilot early enough to adjust the protocol.
+
+## New M0 claim for the Project 3 delta
+
+> **Claim:** For every recommendation emitted from the fixed Project 3 safety corpus, no recipe whose required usable inventory consists only of expired lots is returned, and every ingredient presented as a verified recipe/pantry fact resolves to the canonical recipe data and ingredient catalogue.
+
+- **Metric:** unsafe recommendation rate and unsupported-ingredient assertion rate over a frozen, hand-authored corpus; report numerator and denominator separately.
+- **Threshold:** 0 unsafe recommendations and 0 unsupported verified assertions across the corpus, including deliberately corrupted model responses that the harness must reject.
+- **Baseline:** inherited prompt-only behavior has no deterministic gate or catalogue verification. Establish a reproducible baseline by running the same frozen prompts/cases through the old response-validation path; use mocked/model-recorded outputs for the offline harness. Any live-model comparison is supplementary and must include archived responses, model/date, and call count.
+- **Instrument:** a dependency-light offline runner plus CI checks, modeled on `p2/eval/run_eval.py`. Keep the inherited Project 2 M0 evaluation in CI and report its result independently.
+
+This claim measures application guarantees, not whether users like the recommendations. M4 tests that separate hypothesis.
+
+## Delivery order and scope control
+
+1. **Week 1: verify the base.** Build/install from the inherited branch, run the existing M0 evaluation and relevant backend/web suites, inspect the inventory recommender's real data-loading path, and record failures before edits. Decide promptly whether the current branch is viable. Preserve the baseline commit and keep changes on a Project 3 branch/fork with frequent merges.
+2. **M1 first:** add the deterministic safety gate and regression tests with minimal API changes.
+3. **M2 next:** settle the migration/backfill and compatibility contract before changing all inventory screens.
+4. **M3:** add the canonical verification layer and evidence-driven presentation, reusing the existing recommendation modal where practical.
+5. **M4 and M0:** freeze the test corpus early, pilot the study, then finish the offline CI evaluation and report actual results.
+6. **Presentation:** keep the inherited teaser at the top of the README only if it accurately represents the product; create a short updated teaser and 2–5 minute delta walkthrough. The demo should show inherited behavior, the expiry regression, separate purchase lots, a rejected hallucinated ingredient, and both M0 results.
+
+## Test and compatibility commitments
+
+- Run and preserve the inherited Project 2 M0 evaluation; publish its actual output.
+- Keep existing tests passing, especially receipt-v1 scoring and existing inventory CRUD/expiry behavior. Record any baseline failure as inherited before deciding whether it blocks the extension.
+- Add focused deterministic tests for safety and verification, migration/backfill tests, API/UI integration tests, and the offline M0 corruption case. Aim for substantial scenario coverage (roughly 50 or more meaningful new cases across layers), not a test-count-only target.
+- Run tests without Gemini credentials wherever possible. Keep any live-model calls outside required CI.
+- Keep Project 3 changes legible in dedicated modules/migrations and document the schema transition, rule semantics, and evidence format.
+
+## Explicitly out of scope
+
+- Replacing Epicourier or rewriting the Project 2 receipt scorer.
+- Building a general food database, barcode scanner, nutrition engine, or broad household planning system.
+- Claiming that a prompt alone enforces food safety.
+- Treating the small within-subject study as proof of population-wide behavior change.
+- Migrating unrelated inventory, gamification, or shopping features to a new architecture.
+
+
+# M0 + M4 Implementation Plan
+
+## Scope boundary
+
+Implement only:
+
+- **M0:** Project 3 offline safety and catalogue-grounding evaluation.
+- **M4:** Small, counterbalanced within-subject decision study.
+
+Do **not** implement M1, M2, or M3 production features in this scope.
+
+Important dependency: the M0 claim and M4 comparison require a Project 3 safety/evidence-producing implementation. If M1–M3 are not already present, this plan can complete the **evaluation harness, fixtures, protocol, and study instrumentation**, but cannot honestly claim that production recommendations satisfy the M0 threshold or that M4 measured the real Project 3 presentation.
+
+---
+
+## Phase 0 — Baseline and scope verification
+
+### 0.1 Record the existing baseline
+
+Run and archive:
+
+```powershell
+py -3 p2/eval/run_eval.py
+py -3 p2/eval/run_eval.py --case corrupted
+```
+
+Expected result:
+
+- Existing receipt-v1 M0 returns `PASS`.
+- The corrupted receipt is rejected.
+- The existing result remains reported separately from the Project 3 M0 result.
+
+Inspect:
+
+- `modification_plan.txt`
+- `p2/eval/run_eval.py`
+- `p2/eval/HYPOTHESIS.md`
+- `backend/api/inventory_recommender.py`
+- `backend/tests/test_inventory_recommender.py`
+
+Record baseline failures before modifying anything:
+
+```powershell
+cd backend
+uv run pytest tests/p2
+cd ..\web
+npm install
+npx next typegen
+npm run type-check
+npm test -- --runInBand
+```
+
+Do not treat unrelated pre-existing failures as M0/M4 failures.
+
+### 0.2 Establish the prerequisite gate
+
+Before claiming M0 or M4 complete, verify that the branch has:
+
+1. A deterministic expiry eligibility decision.
+2. Canonical recipe and ingredient data available to the verifier.
+3. Structured recommendation evidence that identifies:
+   - recipe ingredient identity,
+   - pantry availability,
+   - usable quantity,
+   - expiry evidence,
+   - verification status.
+
+If these do not exist, mark the production-result portions of M0/M4 as **blocked**, rather than fabricating results.
+
+---
+
+# M0 — Project 3 offline evaluation
+
+## Phase 1 — Freeze the Project 3 evaluation contract
+
+Create a dependency-light contract for the new evaluation. The evaluator must run without:
+
+- Gemini credentials,
+- Supabase,
+- Node,
+- third-party Python packages,
+- network access.
+
+Proposed files:
+
+- `p3/eval/run_eval.py`
+- `p3/eval/README.md`
+- `p3/eval/HYPOTHESIS.md`
+- `p3/eval/cases/`
+- `p3/eval/corpus/`
+- `p3/eval/results/`
+- `p3/eval/baseline/`
+
+The contract must define:
+
+```text
+as_of_date
+recipe_id
+canonical_recipe_name
+canonical_recipe_ingredients
+ingredient_catalogue_version
+ingredient_catalogue_count
+inventory_lots
+model_response
+validated_recommendations
+```
+
+The evaluator must distinguish:
+
+- valid recommendation output,
+- unsafe recommendation output,
+- unsupported verified assertion,
+- rejected malformed/corrupted model response,
+- unverifiable-but-clearly-labelled assertion.
+
+Do not count a rejected corrupted response as a successful recommendation. Report it separately as a harness-negative-control result.
+
+## Phase 2 — Build the frozen corpus
+
+Create a hand-authored corpus with explicit expected outcomes.
+
+Minimum recommended corpus:
+
+- **30 valid scenarios**
+  - fresh inventory,
+  - mixed fresh and expired inventory,
+  - expiry exactly on `as_of_date`,
+  - missing expiry,
+  - multiple inventory rows,
+  - insufficient quantities,
+  - duplicate ingredient references,
+  - empty optional evidence.
+- **15 expired-only scenarios**
+  - the required usable quantity exists only in expired lots,
+  - equivalent fresh inventory is absent.
+- **15 corrupted model-response scenarios**
+  - unknown recipe ID,
+  - wrong recipe name,
+  - hallucinated ingredient,
+  - ingredient not in catalogue,
+  - ingredient not in canonical recipe,
+  - expired stock falsely marked usable,
+  - unsupported pantry assertion,
+  - malformed evidence,
+  - duplicate contradictory evidence,
+  - missing required verification status.
+
+Each case must contain expected results written independently of the implementation.
+
+The corpus must be immutable during evaluation. Include:
+
+- corpus version,
+- rule version,
+- catalogue version,
+- catalogue row count,
+- case count,
+- SHA-256 hash of the corpus files.
+
+The catalogue count must be asserted as **448**, or the evaluation must fail with an explicit catalogue-drift error.
+
+## Phase 3 — Implement the offline evaluator
+
+Implement pure evaluator functions in `p3/eval/run_eval.py` or small dependency-free modules:
+
+```text
+load_corpus()
+validate_case_shape()
+validate_recipe_identity()
+validate_canonical_ingredient()
+validate_catalogue_membership()
+check_expired_only_recommendation()
+check_verified_assertions()
+evaluate_case()
+summarize_metrics()
+```
+
+The evaluator must:
+
+1. Load a frozen case.
+2. Validate its schema.
+3. Validate every returned recipe ID against supplied canonical recipes.
+4. Validate every verified ingredient against:
+   - the selected recipe’s canonical ingredient set,
+   - the frozen ingredient catalogue.
+5. Calculate usable inventory using the case’s `as_of_date`.
+6. Reject recommendations whose required usable inventory consists only of expired lots.
+7. Reject or downgrade unsupported assertions.
+8. Emit machine-readable JSON.
+9. Emit human-readable output.
+10. Return nonzero exit status on any threshold failure.
+
+The safety check must use:
+
+```text
+expiration_date < as_of_date  => expired and unusable
+expiration_date == as_of_date => usable
+expiration_date is null        => usable unless the explicit contract says otherwise
+invalid expiration date         => evaluation failure, never silently usable
+```
+
+## Phase 4 — Define M0 metrics
+
+Report numerator and denominator separately.
+
+### Metric 1: Unsafe recommendation rate
+
+```text
+unsafe recommendation rate =
+unsafe expired-only recommendations / all evaluated recommendations
+```
+
+Required threshold:
+
+```text
+0 unsafe recommendations
+```
+
+The denominator must be greater than zero.
+
+### Metric 2: Unsupported verified-assertion rate
+
+```text
+unsupported assertion rate =
+unsupported verified assertions / all verified assertions
+```
+
+Required threshold:
+
+```text
+0 unsupported verified assertions
+```
+
+The denominator must be greater than zero.
+
+### Metric 3: Corruption rejection rate
+
+```text
+corrupted cases rejected / corrupted cases
+```
+
+Required threshold:
+
+```text
+100%
+```
+
+This is a harness-integrity metric and must be reported separately from the product guarantee.
+
+### Required output
+
+Example:
+
+```text
+Project 3 M0
+corpus: p3-corpus-v1
+catalogue: 448 entries
+cases: 60
+recommendations evaluated: N
+unsafe recommendations: 0/N
+unsupported verified assertions: 0/N
+corrupted responses rejected: 15/15
+PASS
+```
+
+The evaluator must fail if:
+
+- no valid recommendations were evaluated,
+- no corrupted cases were tested,
+- the catalogue count is wrong,
+- any unsafe recommendation is accepted,
+- any unsupported verified assertion is accepted,
+- any expected rejection is accepted,
+- the corpus cannot be loaded deterministically.
+
+## Phase 5 — Add focused tests
+
+Add dependency-free tests for:
+
+- expired-only rejection,
+- mixed expired/fresh inventory,
+- expiry exactly on the evaluation date,
+- missing expiry,
+- invalid expiry,
+- shuffled inventory order,
+- duplicate ingredients,
+- unknown recipe IDs,
+- mismatched recipe names,
+- hallucinated ingredients,
+- catalogue omissions,
+- valid canonical evidence,
+- malformed evidence,
+- corrupted response rejection,
+- zero-denominator protection,
+- catalogue-version mismatch,
+- deterministic repeated execution.
+
+At least one test must prove that a deliberately unsafe recommendation cannot pass.
+
+At least one test must prove that a deliberately hallucinated ingredient cannot be displayed as verified.
+
+Run the evaluator repeatedly and compare outputs byte-for-byte:
+
+```powershell
+py -3 p3/eval/run_eval.py > result-1.txt
+py -3 p3/eval/run_eval.py > result-2.txt
+fc result-1.txt result-2.txt
+```
+
+## Phase 6 — Add CI
+
+Extend or add a dedicated workflow, for example:
+
+- `.github/workflows/ci-p3-m0-eval.yml`
+
+The workflow must:
+
+1. Check out the repository.
+2. Set up Python 3.11.
+3. Validate all corpus and catalogue JSON.
+4. Run the new Project 3 evaluator.
+5. Run the corrupted-response negative-control command.
+6. Run the existing receipt-v1 M0 independently.
+7. Upload both result files as artifacts.
+8. Fail on any threshold violation.
+
+Required commands:
+
+```bash
+python3 p3/eval/run_eval.py
+python3 p3/eval/run_eval.py --case corrupted
+python3 p2/eval/run_eval.py
+python3 p2/eval/run_eval.py --case corrupted
+```
+
+Do not replace or weaken `.github/workflows/ci-m0-eval.yml`.
+
+## Phase 7 — Baseline comparison
+
+Implement an offline baseline runner that uses the inherited response boundary:
+
+- legacy `RecommendedRecipe` schema,
+- prompt-only response parsing,
+- no deterministic safety gate,
+- no catalogue-grounded evidence.
+
+Use recorded/mock responses only. Do not require live Gemini calls in CI.
+
+Report baseline characteristics honestly:
+
+- no deterministic expired-only gate,
+- no canonical evidence field,
+- no supported assertion verification.
+
+Any live-model baseline must remain optional and archive:
+
+- raw response,
+- model name,
+- model date,
+- commit SHA,
+- prompt hash,
+- call count,
+- scenario ID.
+
+## M0 completion gate
+
+M0 is complete only when:
+
+- the frozen corpus is committed,
+- the evaluator is dependency-free,
+- the evaluator is deterministic,
+- all valid cases execute,
+- all corrupted cases are rejected,
+- unsafe recommendation rate is `0/N`,
+- unsupported verified assertion rate is `0/N`,
+- existing receipt M0 still passes independently,
+- CI runs both evaluations,
+- results are archived and reproducible from a clean checkout.
+
+---
+
+# M4 — Within-subject decision study
+
+## Phase 8 — Freeze the study protocol before data collection
+
+Create a short protocol, for example:
+
+- `p3/m4/protocol.md`
+- `p3/m4/scenarios.json`
+- `p3/m4/condition-order.csv`
+- `p3/m4/analysis.py`
+- `p3/m4/raw/README.md`
+- `p3/m4/results/README.md`
+
+The protocol must be frozen before recruiting or running participants.
+
+Document:
+
+- study purpose,
+- hypothesis,
+- inclusion criteria,
+- convenience-sample limitations,
+- consent procedure,
+- anonymization procedure,
+- withdrawal procedure,
+- session length,
+- scenario order,
+- condition order,
+- metrics,
+- analysis formulas,
+- stopping rule,
+- limitations.
+
+Do not claim statistical population-wide impact.
+
+## Phase 9 — Define study conditions
+
+Use two conditions with the same underlying scenarios.
+
+### Condition A — inherited presentation
+
+Use the current recommendation shape and UI behavior represented by:
+
+- `backend/api/inventory_recommender.py`
+- `web/src/components/inventory/RecipeRecommendationModal.tsx`
+
+This condition may show:
+
+- recipe name,
+- match score,
+- free-text reason,
+- available/missing ingredient lists,
+- expiring ingredient labels.
+
+### Condition B — Project 3 presentation
+
+This condition must show only evidence produced by the Project 3 implementation:
+
+- verified recipe identity,
+- canonical ingredient identity,
+- usable quantity,
+- expiry status,
+- lot evidence where relevant,
+- explicit “unverified” or “not enough evidence” states,
+- exclusion of expired-only recipes.
+
+Do not manually improve Condition B during the study. It must use the same frozen build and fixtures tested by M0.
+
+## Phase 10 — Freeze scenarios
+
+Create 8–12 scenarios covering:
+
+1. A clearly safe recommendation.
+2. A recipe requiring only expired stock.
+3. Mixed expired and fresh stock.
+4. Ingredient expiring today.
+5. Missing ingredient with a plausible hallucinated explanation.
+6. Duplicate or similarly named ingredients.
+7. Multiple recipes with different pantry coverage.
+8. A scenario where the highest-scored recipe is not the safest choice.
+9. A scenario with insufficient quantity.
+10. A scenario with an unknown or unverifiable ingredient.
+
+Each scenario must define the ground truth:
+
+```text
+scenario_id
+as_of_date
+inventory_lots
+canonical_recipes
+safe_recipe_ids
+unsafe_recipe_ids
+ground_truth_available_ingredients
+ground_truth_expired_ingredients
+ground_truth_verified_evidence
+```
+
+The same scenario data must be used in both conditions.
+
+## Phase 11 — Counterbalance participants
+
+Assign participants to one of two order groups:
+
+- **AB:** inherited condition first, Project 3 condition second.
+- **BA:** Project 3 condition first, inherited condition second.
+
+Use a deterministic assignment rule, such as alternating anonymized participant IDs. Store only:
+
+```text
+participant_code
+order_group
+scenario_order_seed
+```
+
+Do not store names, email addresses, or unnecessary demographic information.
+
+Keep scenario order randomized or counterbalanced within each condition, using a recorded seed.
+
+## Phase 12 — Define the participant task
+
+For every scenario, ask the participant to:
+
+1. Choose one recipe.
+2. Identify which pantry evidence they relied on.
+3. Identify whether any chosen ingredient is expired.
+4. Rate confidence from 1–5.
+5. Submit the decision.
+
+Measure decision time from scenario display to submission. Do not include facilitator explanation time.
+
+Capture:
+
+```text
+participant_code
+condition
+scenario_id
+order_group
+scenario_position
+selected_recipe_id
+selected_recipe_name
+identified_ingredients[]
+identified_expired_ingredients[]
+decision_time_seconds
+confidence_1_to_5
+```
+
+## Phase 13 — Define M4 metrics
+
+### Primary metric: unsafe selection rate
+
+```text
+unsafe selections / completed trials
+```
+
+An unsafe selection is a recipe whose required usable inventory is only expired or otherwise unavailable according to frozen ground truth.
+
+Report separately for:
+
+- inherited condition,
+- Project 3 condition,
+- paired participant difference.
+
+### Secondary metric: ingredient-claim accuracy
+
+```text
+correctly identified pantry claims / all scored claims
+```
+
+A claim is correct only when it matches the frozen scenario ground truth.
+
+Do not award correctness based on free-text similarity alone. Use a manually defined scoring key.
+
+### Secondary metric: decision time
+
+Report:
+
+- median seconds per condition,
+- mean seconds per condition,
+- paired difference per participant,
+- outliers and missing trials.
+
+### Secondary metric: confidence
+
+Report:
+
+- mean confidence per condition,
+- median confidence per condition,
+- paired confidence difference.
+
+Do not interpret increased confidence as improvement unless accuracy also supports it.
+
+## Phase 14 — Analyze the study
+
+`p3/m4/analysis.py` must:
+
+1. Validate the raw tally schema.
+2. Reject unknown scenario IDs.
+3. Reject invalid condition names.
+4. Validate every selected recipe against scenario ground truth.
+5. Calculate all numerators and denominators.
+6. Preserve missing data explicitly.
+7. Calculate paired participant-level differences.
+8. Produce machine-readable JSON and a human-readable report.
+9. Never silently discard malformed rows.
+
+For the small convenience sample, report descriptive results and paired differences. Do not overstate significance.
+
+Minimum report:
+
+```text
+participants enrolled
+participants completed
+trials planned
+trials completed
+unsafe selections: A numerator/denominator
+unsafe selections: B numerator/denominator
+ingredient accuracy: A numerator/denominator
+ingredient accuracy: B numerator/denominator
+decision time: median and mean by condition
+confidence: median and mean by condition
+paired differences
+missing data
+protocol deviations
+limitations
+```
+
+The hypothesis may be unsupported. That is a valid result.
+
+## Phase 15 — Pilot and protocol lock
+
+Run a pilot with at least two participants or equivalent internal dry runs.
+
+The pilot must verify:
+
+- every scenario loads,
+- both conditions are distinguishable,
+- timestamps are captured correctly,
+- the task can be completed without facilitator intervention,
+- no condition reveals the other condition,
+- the raw tally can be analyzed,
+- no unnecessary personal data is collected.
+
+After the pilot:
+
+- correct only execution defects,
+- record every protocol change,
+- regenerate scenario and protocol hashes,
+- do not change outcome definitions based on pilot results.
+
+## Phase 16 — Execute and archive M4
+
+Store anonymized raw data in a controlled location:
+
+- `p3/m4/raw/`
+- or an external private location referenced by a checksum.
+
+Archive:
+
+- protocol,
+- scenario set,
+- condition-order assignment,
+- raw tally,
+- analysis script,
+- generated result,
+- corpus hash,
+- application commit SHA,
+- timestamps,
+- known deviations.
+
+Do not commit personally identifying information.
+
+## M4 completion gate
+
+M4 is complete only when:
+
+- the protocol was frozen before collection,
+- scenarios are identical across conditions,
+- order is counterbalanced,
+- all completed trials have condition and scenario IDs,
+- raw data is anonymized,
+- unsafe selection is scored from ground truth,
+- ingredient accuracy is scored from explicit keys,
+- decision time and confidence are recorded,
+- analysis is reproducible from the archived raw tally,
+- results include denominators and missing data,
+- limitations are reported,
+- no broad causal or population claim is made.
+
+---
+
+# Final verification sequence
+
+Run from a clean checkout:
+
+```powershell
+py -3 p2/eval/run_eval.py
+py -3 p2/eval/run_eval.py --case corrupted
+
+py -3 p3/eval/run_eval.py
+py -3 p3/eval/run_eval.py --case corrupted
+
+py -3 p3/m4/analysis.py --input p3/m4/raw/tally.csv
+```
+
+Then run the relevant application verification:
+
+```powershell
+cd backend
+uv run pytest tests/p2
+uv run pytest tests/test_inventory_recommender.py
+
+cd ..\web
+npx next typegen
+npm run type-check
+npm test -- --runInBand
+```
+
+Final acceptance requires:
+
+```text
+Existing receipt M0: PASS
+Project 3 M0 unsafe recommendations: 0/N
+Project 3 M0 unsupported assertions: 0/N
+Project 3 corrupted cases rejected: 100%
+M4 analysis: reproducible
+M4 data: anonymized
+M4 results: reported with denominators and limitations
+```

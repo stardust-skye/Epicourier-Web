@@ -1,0 +1,50 @@
+name: Project 3 M0 and inherited M0 evaluations
+
+on:
+  pull_request:
+    paths:
+      - "p3/eval/**"
+      - "p3/m4/**"
+      - "p2/eval/**"
+      - ".github/workflows/ci-p3-evaluations.yml"
+  push:
+    branches: [main, se26f-p2]
+    paths:
+      - "p3/eval/**"
+      - "p3/m4/**"
+      - "p2/eval/**"
+      - ".github/workflows/ci-p3-evaluations.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  evaluations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate frozen JSON
+        run: |
+          python3 -c "import json; [json.load(open(p)) for p in ['p3/eval/catalogue.json','p3/eval/corpus/cases.json','p3/m4/scenarios.json']]"
+      - name: Run Project 3 M0 contract evaluation
+        run: python3 p3/eval/run_eval.py | tee p3-m0-results.txt
+      - name: Run Project 3 corrupted-response negative controls
+        run: python3 p3/eval/run_eval.py --case corrupted | tee p3-m0-corrupted.txt
+      - name: Run inherited-boundary mock baseline
+        run: python3 p3/eval/baseline/run_baseline.py | tee p3-m0-baseline.txt
+      - name: Check Project 3 contract tests and M4 tally analyzer
+        run: python3 -m unittest p3.eval.test_eval p3.m4.test_analysis
+      - name: Run inherited receipt-v1 M0 independently
+        run: python3 p2/eval/run_eval.py | tee p2-m0-results.txt
+      - name: Run inherited receipt-v1 corrupted case
+        run: python3 p2/eval/run_eval.py --case corrupted | tee p2-m0-corrupted.txt
+      - name: Upload evaluation results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-p3-m0-results
+          path: "*-m0-*.txt"
+          if-no-files-found: warn

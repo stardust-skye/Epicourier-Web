@@ -1,0 +1,2689 @@
+{
+  "corpus_version": "p3-corpus-v1",
+  "rule_version": "expiry-evidence-v1",
+  "catalogue_version": "epicourier-ingredients-supabase-2026-11-10",
+  "catalogue_count": 448,
+  "counts": {
+    "valid": 30,
+    "unsafe": 15,
+    "corrupted": 15
+  },
+  "cases": [
+    {
+      "case_id": "valid-01",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1000,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 1,
+              "name": "Raw King Prawns",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 1,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1000,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 1,
+                "ingredient_name": "Raw King Prawns",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-02",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1001,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 2,
+              "name": "Olive Oil",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 2,
+          "quantity": 2,
+          "expiration_date": "2026-11-10"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1001,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 2,
+                "ingredient_name": "Olive Oil",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-10"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-03",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1002,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 3,
+              "name": "Chopped Onion",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 3,
+          "quantity": 2,
+          "expiration_date": "2026-11-11"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1002,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 3,
+                "ingredient_name": "Chopped Onion",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-11"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-04",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1003,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 4,
+              "name": "Freshly Chopped Parsley",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 4,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1003,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 4,
+                "ingredient_name": "Freshly Chopped Parsley",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-05",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1004,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 5,
+              "name": "White Wine",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 5,
+          "quantity": 2,
+          "expiration_date": "2026-11-10"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1004,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 5,
+                "ingredient_name": "White Wine",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-10"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-06",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1005,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 6,
+              "name": "Chopped Tomatoes",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 6,
+          "quantity": 2,
+          "expiration_date": "2026-11-11"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1005,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 6,
+                "ingredient_name": "Chopped Tomatoes",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-11"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-07",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1006,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 7,
+              "name": "Minced Garlic",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 7,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1006,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 7,
+                "ingredient_name": "Minced Garlic",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-08",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1007,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 8,
+              "name": "Cubed Feta Cheese",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 8,
+          "quantity": 2,
+          "expiration_date": "2026-11-10"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1007,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 8,
+                "ingredient_name": "Cubed Feta Cheese",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-10"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-09",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1008,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 9,
+              "name": "Enchilada sauce",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 9,
+          "quantity": 2,
+          "expiration_date": "2026-11-11"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1008,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 9,
+                "ingredient_name": "Enchilada sauce",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-11"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-10",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1009,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 10,
+              "name": "Shredded Monterey Jack cheese",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 10,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1009,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 10,
+                "ingredient_name": "Shredded Monterey Jack cheese",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-11",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1010,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 11,
+              "name": "Corn tortillas",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 11,
+          "quantity": 2,
+          "expiration_date": "2026-11-10"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1010,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 11,
+                "ingredient_name": "Corn tortillas",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-10"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-12",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1011,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 12,
+              "name": "Chicken breasts",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 12,
+          "quantity": 2,
+          "expiration_date": "2026-11-11"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1011,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 12,
+                "ingredient_name": "Chicken breasts",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-11"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-13",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1012,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 13,
+              "name": "plain flour",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 13,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1012,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 13,
+                "ingredient_name": "plain flour",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-14",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1013,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 14,
+              "name": "chilled butter",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 14,
+          "quantity": 2,
+          "expiration_date": "2026-11-10"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1013,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 14,
+                "ingredient_name": "chilled butter",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-10"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-15",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1014,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 15,
+              "name": "cold water",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 15,
+          "quantity": 2,
+          "expiration_date": "2026-11-11"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1014,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 15,
+                "ingredient_name": "cold water",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-11"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-16",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1015,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 16,
+              "name": "raspberry jam",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 16,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1015,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 16,
+                "ingredient_name": "raspberry jam",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-17",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1016,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 17,
+              "name": "butter",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 17,
+          "quantity": 2,
+          "expiration_date": "2026-11-10"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1016,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 17,
+                "ingredient_name": "butter",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-10"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-18",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1017,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 18,
+              "name": "caster sugar",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 18,
+          "quantity": 2,
+          "expiration_date": "2026-11-11"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1017,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 18,
+                "ingredient_name": "caster sugar",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-11"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-19",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1018,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 19,
+              "name": "ground almonds",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 19,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1018,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 19,
+                "ingredient_name": "ground almonds",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-20",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1019,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 20,
+              "name": "free-range egg, beaten",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 20,
+          "quantity": 2,
+          "expiration_date": "2026-11-10"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1019,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 20,
+                "ingredient_name": "free-range egg, beaten",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-10"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-21",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1020,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 21,
+              "name": "almond extract",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 21,
+          "quantity": 2,
+          "expiration_date": "2026-11-11"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1020,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 21,
+                "ingredient_name": "almond extract",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-11"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-22",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1021,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 22,
+              "name": "flaked almonds",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 22,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1021,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 22,
+                "ingredient_name": "flaked almonds",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-23",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1022,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 23,
+              "name": "Digestive Biscuits",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 23,
+          "quantity": 2,
+          "expiration_date": "2026-11-10"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1022,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 23,
+                "ingredient_name": "Digestive Biscuits",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-10"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-24",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1023,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 24,
+              "name": "Butter",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 24,
+          "quantity": 2,
+          "expiration_date": "2026-11-11"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1023,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 24,
+                "ingredient_name": "Butter",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-11"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-25",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1024,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 25,
+              "name": "Bramley Apples",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 25,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1024,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 25,
+                "ingredient_name": "Bramley Apples",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-26",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1025,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 26,
+              "name": "Salted Butter",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 26,
+          "quantity": 2,
+          "expiration_date": "2026-11-10"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1025,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 26,
+                "ingredient_name": "Salted Butter",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-10"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-27",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1026,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 27,
+              "name": "Caster Sugar",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 27,
+          "quantity": 2,
+          "expiration_date": "2026-11-11"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1026,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 27,
+                "ingredient_name": "Caster Sugar",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-11"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-28",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1027,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 28,
+              "name": "Free-range Eggs",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 28,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1027,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 28,
+                "ingredient_name": "Free-range Eggs",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-29",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1028,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 29,
+              "name": "Ground Almonds",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 29,
+          "quantity": 2,
+          "expiration_date": "2026-11-10"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1028,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 29,
+                "ingredient_name": "Ground Almonds",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-10"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-30",
+      "kind": "valid",
+      "expected_outcome": "accept",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1029,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 30,
+              "name": "Almond Extract",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 30,
+          "quantity": 2,
+          "expiration_date": "2026-11-11"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1029,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 30,
+                "ingredient_name": "Almond Extract",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-11"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-01",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1030,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 1,
+              "name": "Raw King Prawns",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 1,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1030,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 1,
+                "ingredient_name": "Raw King Prawns",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-02",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1031,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 2,
+              "name": "Olive Oil",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 2,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1031,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 2,
+                "ingredient_name": "Olive Oil",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-03",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1032,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 3,
+              "name": "Chopped Onion",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 3,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1032,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 3,
+                "ingredient_name": "Chopped Onion",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-04",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1033,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 4,
+              "name": "Freshly Chopped Parsley",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 4,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1033,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 4,
+                "ingredient_name": "Freshly Chopped Parsley",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-05",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1034,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 5,
+              "name": "White Wine",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 5,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1034,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 5,
+                "ingredient_name": "White Wine",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-06",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1035,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 6,
+              "name": "Chopped Tomatoes",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 6,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1035,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 6,
+                "ingredient_name": "Chopped Tomatoes",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-07",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1036,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 7,
+              "name": "Minced Garlic",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 7,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1036,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 7,
+                "ingredient_name": "Minced Garlic",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-08",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1037,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 8,
+              "name": "Cubed Feta Cheese",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 8,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1037,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 8,
+                "ingredient_name": "Cubed Feta Cheese",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-09",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1038,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 9,
+              "name": "Enchilada sauce",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 9,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1038,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 9,
+                "ingredient_name": "Enchilada sauce",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-10",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1039,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 10,
+              "name": "Shredded Monterey Jack cheese",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 10,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1039,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 10,
+                "ingredient_name": "Shredded Monterey Jack cheese",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-11",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1040,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 11,
+              "name": "Corn tortillas",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 11,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1040,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 11,
+                "ingredient_name": "Corn tortillas",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-12",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1041,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 12,
+              "name": "Chicken breasts",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 12,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1041,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 12,
+                "ingredient_name": "Chicken breasts",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-13",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1042,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 13,
+              "name": "plain flour",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 13,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1042,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 13,
+                "ingredient_name": "plain flour",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-14",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1043,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 14,
+              "name": "chilled butter",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 14,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1043,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 14,
+                "ingredient_name": "chilled butter",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unsafe-15",
+      "kind": "unsafe",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1044,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 15,
+              "name": "cold water",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 15,
+          "quantity": 1,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1044,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 15,
+                "ingredient_name": "cold water",
+                "availability": "unavailable",
+                "usable_quantity": 0,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "corrupt-01-unknown_recipe",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1045,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 1,
+              "name": "Raw King Prawns",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 1,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 999999,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 1,
+                "ingredient_name": "Raw King Prawns",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "unknown_recipe_id"
+    },
+    {
+      "case_id": "corrupt-02-wrong_name",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1046,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 2,
+              "name": "Olive Oil",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 2,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1046,
+            "recipe_name": "Wrong Dish",
+            "evidence": [
+              {
+                "ingredient_id": 2,
+                "ingredient_name": "Olive Oil",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "recipe_name_mismatch"
+    },
+    {
+      "case_id": "corrupt-03-hallucinated_ingredient",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1047,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 3,
+              "name": "Chopped Onion",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 3,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1047,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 447,
+                "ingredient_name": "Marzipan",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "ingredient_not_in_recipe"
+    },
+    {
+      "case_id": "corrupt-04-catalogue_omission",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1048,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 4,
+              "name": "Freshly Chopped Parsley",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 4,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1048,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 9999,
+                "ingredient_name": "Missing",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "ingredient_not_in_catalogue"
+    },
+    {
+      "case_id": "corrupt-05-expired_claim",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1049,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 5,
+              "name": "White Wine",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 5,
+          "quantity": 2,
+          "expiration_date": "2026-11-09"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1049,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 5,
+                "ingredient_name": "White Wine",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "expired_only_requirement"
+    },
+    {
+      "case_id": "corrupt-06-unsupported_pantry",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1050,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 6,
+              "name": "Chopped Tomatoes",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 6,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1050,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 6,
+                "ingredient_name": "Chopped Tomatoes",
+                "availability": "available",
+                "usable_quantity": 999,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "usable_quantity_mismatch"
+    },
+    {
+      "case_id": "corrupt-07-malformed_evidence",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1051,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 7,
+              "name": "Minced Garlic",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 7,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1051,
+            "recipe_name": "Canonical Dish",
+            "evidence": "not a list"
+          }
+        ]
+      },
+      "expected_violation": "malformed_evidence"
+    },
+    {
+      "case_id": "corrupt-08-duplicate_evidence",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1052,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 8,
+              "name": "Cubed Feta Cheese",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 8,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1052,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 8,
+                "ingredient_name": "Cubed Feta Cheese",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              },
+              {
+                "ingredient_id": 8,
+                "ingredient_name": "Cubed Feta Cheese",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "duplicate_evidence"
+    },
+    {
+      "case_id": "corrupt-09-missing_status",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1053,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 9,
+              "name": "Enchilada sauce",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 9,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1053,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 9,
+                "ingredient_name": "Enchilada sauce",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": []
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "missing_verification_status"
+    },
+    {
+      "case_id": "corrupt-10-bad_date",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1054,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 10,
+              "name": "Shredded Monterey Jack cheese",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 10,
+          "quantity": 2,
+          "expiration_date": "yesterday"
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1054,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 10,
+                "ingredient_name": "Shredded Monterey Jack cheese",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "invalid_inventory_lot"
+    },
+    {
+      "case_id": "corrupt-11-unknown_ingredient",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1055,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 11,
+              "name": "Corn tortillas",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 11,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1055,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 9999,
+                "ingredient_name": "Corn tortillas",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "ingredient_not_in_catalogue"
+    },
+    {
+      "case_id": "corrupt-12-quantity_mismatch",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1056,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 12,
+              "name": "Chicken breasts",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 12,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1056,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 12,
+                "ingredient_name": "Chicken breasts",
+                "availability": "available",
+                "usable_quantity": 7,
+                "expiry_evidence": [],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "usable_quantity_mismatch"
+    },
+    {
+      "case_id": "corrupt-13-wrong_expiry",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1057,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 13,
+              "name": "plain flour",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 13,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1057,
+            "recipe_name": "Canonical Dish",
+            "evidence": [
+              {
+                "ingredient_id": 13,
+                "ingredient_name": "plain flour",
+                "availability": "available",
+                "usable_quantity": 2,
+                "expiry_evidence": [
+                  "2026-11-09"
+                ],
+                "verification_status": "verified"
+              }
+            ]
+          }
+        ]
+      },
+      "expected_violation": "expiry_evidence_mismatch"
+    },
+    {
+      "case_id": "corrupt-14-missing_evidence",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1058,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 14,
+              "name": "chilled butter",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 14,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1058,
+            "recipe_name": "Canonical Dish"
+          }
+        ]
+      },
+      "expected_violation": "missing_evidence"
+    },
+    {
+      "case_id": "corrupt-15-incomplete_evidence",
+      "kind": "corrupted",
+      "expected_outcome": "reject",
+      "as_of_date": "2026-11-10",
+      "canonical_recipes": [
+        {
+          "recipe_id": 1059,
+          "name": "Canonical Dish",
+          "ingredients": [
+            {
+              "ingredient_id": 15,
+              "name": "cold water",
+              "required_quantity": 1
+            }
+          ]
+        }
+      ],
+      "inventory_lots": [
+        {
+          "ingredient_id": 15,
+          "quantity": 2,
+          "expiration_date": null
+        }
+      ],
+      "model_response": {
+        "recommendations": [
+          {
+            "recipe_id": 1059,
+            "recipe_name": "Canonical Dish",
+            "evidence": []
+          }
+        ]
+      },
+      "expected_violation": "incomplete_recipe_evidence"
+    }
+  ]
+}

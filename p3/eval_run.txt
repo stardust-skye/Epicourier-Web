@@ -1,0 +1,12 @@
+from the repository root in PowerShell
+
+py -3 p3/eval/run_eval.py
+py -3 p3/eval/run_eval.py --case corrupted
+py -3 p3/eval/baseline/run_baseline.py
+py -3 -m unittest p3.eval.test_eval p3.m4.test_analysis
+
+py -3 p2/eval/run_eval.py
+py -3 p2/eval/run_eval.py --case corrupted
+
+
+py -3 p3/m4/analysis.py --input p3/m4/raw/tally.csv

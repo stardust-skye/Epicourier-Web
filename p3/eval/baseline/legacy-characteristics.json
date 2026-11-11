@@ -1,0 +1,11 @@
+{
+  "baseline": "inherited-inventory-recommender",
+  "response_schema": "RecommendedRecipe",
+  "input": "prompt-formatted inventory and recipe names",
+  "expiry_policy": "prompt instruction only; no deterministic eligibility gate",
+  "evidence_field": false,
+  "catalogue_grounding": false,
+  "offline_mock_only": true,
+  "live_model_calls": 0,
+  "interpretation": "Describes the response boundary; does not estimate how often a live model violates it."
+}

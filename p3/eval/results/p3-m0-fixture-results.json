@@ -1,0 +1,22 @@
+﻿{
+  "case_count": 60,
+  "catalogue_count": 448,
+  "catalogue_version": "epicourier-ingredients-supabase-2026-11-10",
+  "corpus_sha256": "18d1095d7487ad7fff322970986a4502394eb9e6ed18b079824065c04659c771",
+  "corpus_version": "p3-corpus-v1",
+  "corrupted_cases": 15,
+  "corrupted_rejected": 15,
+  "evaluation": "Project 3 M0",
+  "failures": [],
+  "production_prerequisites": "BLOCKED: M1/M3 deterministic production gate and structured verifier are absent",
+  "recommendations_evaluated": 45,
+  "rule_version": "expiry-evidence-v1",
+  "status": "PASS (offline contract harness only)",
+  "unsafe_negative_controls": 15,
+  "unsafe_recommendation_proposals": 15,
+  "unsafe_recommendations": 0,
+  "unsafe_recommendations_accepted": 0,
+  "unsupported_verified_assertions": 0,
+  "valid_cases": 30,
+  "verified_assertions": 45
+}

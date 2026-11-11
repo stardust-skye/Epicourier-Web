@@ -1,0 +1,1 @@
+Run `py -3 p3/m4/analysis.py --input p3/m4/raw/tally.csv` to reproduce the illustrative synthetic report. The analyzer marks its provenance in the output. These numbers are not participant observations or empirical study results. Replace the input only if real data is later collected and anonymized.

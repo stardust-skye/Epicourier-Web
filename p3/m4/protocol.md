@@ -1,0 +1,17 @@
+# M4 pilot protocol (frozen before participant collection)
+
+**Purpose and hypothesis.** Compare choices and evidence recall under the inherited recipe presentation (A) and a verified evidence presentation with expired-only recipes excluded (B). Hypothesis: B lowers unsafe selections and increases ingredient-claim accuracy. This convenience pilot is descriptive and cannot establish population-wide or causal effects.
+
+**Readiness limitation.** Condition B requires the M1/M3 implementation and must be rendered from that frozen build and its M0 fixtures. Those production features are absent in this scope. This protocol, scenarios, assignment method, and analysis are ready for dry-run only; participant collection and claims about a real B presentation must wait for that dependency. Never hand-edit the B evidence during a study.
+
+**Participants and consent.** Convenience sample of adults able to read the interface; target 4–8 for an exploratory course pilot, with at least two pilot dry-runs before recruitment. Explain the task, timing, voluntary nature, and withdrawal at any point; obtain informed consent before recording. Do not collect names, email, or demographics. Use random participant codes; discard a withdrawn participant's rows on request. Session target 15–20 minutes, with no facilitator explanation during timed trials.
+
+**Design.** Within-subject, same ten scenarios in both conditions. Assign anonymous sequential codes alternately AB then BA; use a fixed, recorded scenario-order seed and reverse order for the second condition. Conditions are separated by a short neutral break. Do not reveal the other condition or provide correctness feedback. Freeze protocol/scenarios and record their SHA-256 before collection. Stopping rule: stop at 8 completed participants or course deadline; report all enrolled/completed and deviations.
+
+**Task per trial.** From scenario display to submit, choose one recipe, identify pantry evidence relied on, identify expired ingredients, rate confidence 1–5, and submit. Record elapsed seconds automatically; facilitator time is excluded. Use the same underlying inventory and recipe facts in A and B.
+
+**Outcomes.** Unsafe selection is selected recipe ID in scenario `unsafe_recipe_ids`; report numerator/denominator by condition and paired participant difference. Ingredient accuracy uses the scenario's exact `ground_truth_available_ingredients` and `ground_truth_expired_ingredients` keys; score each submitted identity as correct/incorrect, no fuzzy text matching. Report accuracy numerator/denominator. Report mean/median time and confidence by condition and paired differences. Higher confidence is not improvement unless accuracy supports it. Preserve missing trials and protocol deviations.
+
+**Privacy and archive.** Store only participant code, order, seed, condition, scenario, selected recipe, identified ingredient IDs, time, and confidence. `raw/` is for anonymized CSV only; do not commit personal data. Archive protocol/scenario hashes, frozen app commit, tally, analysis output, timestamps, and deviations. Pilot with two internal dry-runs; verify scenario loading, condition distinction, timing, no cross-condition leakage, and analyzer compatibility before recruitment. Pilot dry-runs are not participant outcomes.
+
+**Limitations.** Small convenience sample, repeated exposure, learning/carryover, scenario realism, and differences in visual presentation limit interpretation. Report descriptive counts and paired differences without broad claims or significance claims.
